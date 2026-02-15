@@ -6,11 +6,12 @@ description: Use when implementation is complete, all tests pass, and you need t
 # Finishing a Development Branch
 
 ## Overview
+
 Guide completion of development work by presenting clear options and handling chosen workflow.
 
 **Core principle:** Verify tests → Present options → Execute choice → Clean up.
 
-**Announce at start:** "I'm using finishing-a-development-branch skill to complete this work."
+**Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work."
 
 ## The Process
 
@@ -26,6 +27,7 @@ npm test / cargo test / pytest / go test ./...
 **If tests fail:**
 ```
 Tests failing (<N> failures). Must fix before completing:
+
 [Show failures]
 
 Cannot proceed with merge/PR until tests pass.
@@ -47,11 +49,13 @@ Or ask: "This branch split from main - is that correct?"
 ### Step 3: Present Options
 
 Present exactly these 4 options:
+
 ```
 Implementation complete. What would you like to do?
+
 1. Merge back to <base-branch> locally
 2. Push and create a Pull Request
-3. Keep branch as-is (I'll handle it later)
+3. Keep the branch as-is (I'll handle it later)
 4. Discard this work
 
 Which option?
@@ -80,7 +84,7 @@ git merge <feature-branch>
 git branch -d <feature-branch>
 ```
 
-Then: Cleanup workflow (Step 5)
+Then: Cleanup worktree (Step 5)
 
 #### Option 2: Push and Create PR
 
@@ -99,13 +103,13 @@ EOF
 )"
 ```
 
-Then: Cleanup workflow (Step 5)
+Then: Cleanup worktree (Step 5)
 
 #### Option 3: Keep As-Is
 
-Report: "Keeping branch <name>. Workflow preserved at <path>."
+Report: "Keeping branch <name>. Worktree preserved at <path>."
 
-**Don't cleanup workflow.**
+**Don't cleanup worktree.**
 
 #### Option 4: Discard
 
@@ -127,7 +131,7 @@ git checkout <base-branch>
 git branch -D <feature-branch>
 ```
 
-Then: Cleanup workflow (Step 5)
+Then: Cleanup worktree (Step 5)
 
 ### Step 5: Cleanup Worktree
 
@@ -149,7 +153,7 @@ git worktree remove <worktree-path>
 
 | Option | Merge | Push | Keep Worktree | Cleanup Branch |
 |--------|-------|------|---------------|----------------|
-| 1. Merge locally | ✓ | - | ✓ | ✓ |
+| 1. Merge locally | ✓ | - | - | ✓ |
 | 2. Create PR | - | ✓ | ✓ | - |
 | 3. Keep as-is | - | - | ✓ | - |
 | 4. Discard | - | - | - | ✓ (force) |
@@ -157,7 +161,7 @@ git worktree remove <worktree-path>
 ## Common Mistakes
 
 **Skipping test verification**
-- **Problem:** Merging broken code, creating failing PR
+- **Problem:** Merge broken code, create failing PR
 - **Fix:** Always verify tests before offering options
 
 **Open-ended questions**
@@ -172,7 +176,7 @@ git worktree remove <worktree-path>
 - **Problem:** Accidentally delete work
 - **Fix:** Require typed "discard" confirmation
 
-## Flags
+## Red Flags
 
 **Never:**
 - Proceed with failing tests

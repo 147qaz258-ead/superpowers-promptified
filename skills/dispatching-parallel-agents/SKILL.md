@@ -6,6 +6,7 @@ description: Use when facing 2+ independent tasks that can be worked on without 
 # Dispatching Parallel Agents
 
 ## Overview
+
 When you have multiple unrelated failures (different test files, different subsystems, different bugs), investigating them sequentially wastes time. Each investigation is independent and can happen in parallel.
 
 **Core principle:** Dispatch one agent per independent problem domain. Let them work concurrently.
@@ -24,8 +25,7 @@ digraph when_to_use {
 
     "Multiple failures?" -> "Are they independent?" [label="yes"];
     "Are they independent?" -> "Single agent investigates all" [label="no - related"];
-    "Are they independent?" -> "One agent per problem domain" [label="yes"];
-    "One agent per problem domain" -> "Can they work in parallel?" [label="yes"];
+    "Are they independent?" -> "Can they work in parallel?" [label="yes"];
     "Can they work in parallel?" -> "Parallel dispatch" [label="yes"];
     "Can they work in parallel?" -> "Sequential agents" [label="no - shared state"];
 }
@@ -38,10 +38,9 @@ digraph when_to_use {
 - No shared state between investigations
 
 **Don't use when:**
-- Failures are related (fixing one might fix others)
+- Failures are related (fix one might fix others)
 - Need to understand full system state
 - Agents would interfere with each other
-- Need to understand entire system before fixing
 
 ## The Pattern
 
@@ -110,16 +109,17 @@ Return: Summary of what you found and what you fixed.
 
 ## Common Mistakes
 
-| Mistake | Fix |
-|---------|-----|
-| **❌ Too broad:** "Fix all the tests" - agent gets lost |
-| **✅ Specific:** "Fix agent-tool-abort.test.ts" - focused scope |
-| **❌ No context:** "Fix the race condition" - agent doesn't know where |
-| **✅ Context:** Paste the error messages and test names |
-| **❌ No constraints:** Agent might refactor everything |
-| **✅ Constraints:** "Do NOT change production code" or "Fix tests only" |
-| **❌ Vague output:** "Fix it" - you don't know what changed |
-| **✅ Specific:** "Return summary of root cause and changes" |
+**❌ Too broad:** "Fix all the tests" - agent gets lost
+**✅ Specific:** "Fix agent-tool-abort.test.ts" - focused scope
+
+**❌ No context:** "Fix the race condition" - agent doesn't know where
+**✅ Context:** Paste the error messages and test names
+
+**❌ No constraints:** Agent might refactor everything
+**✅ Constraints:** "Do NOT change production code" or "Fix tests only"
+
+**❌ Vague output:** "Fix it" - you don't know what changed
+**✅ Specific:** "Return summary of root cause and changes"
 
 ## When NOT to Use
 
@@ -157,18 +157,18 @@ Agent 3 → Fix tool-approval-race-conditions.test.ts
 
 ## Key Benefits
 
-1. **Parallelization** — Multiple investigations happen simultaneously
-2. **Focus** — Each agent has narrow scope, less context to track
-3. **Independence** — Agents don't interfere with each other
-4. **Speed** — 3 problems solved in time of 1
+1. **Parallelization** - Multiple investigations happen simultaneously
+2. **Focus** - Each agent has narrow scope, less context to track
+3. **Independence** - Agents don't interfere with each other
+4. **Speed** - 3 problems solved in time of 1
 
 ## Verification
 
 After agents return:
-1. **Review each summary** — Understand what changed
-2. **Check for conflicts** — Did agents edit same code?
-3. **Run full suite** — Verify all fixes work together
-4. **Spot check** — Agents can make systematic errors
+1. **Review each summary** - Understand what changed
+2. **Check for conflicts** - Did agents edit same code?
+3. **Run full suite** - Verify all fixes work together
+4. **Spot check** - Agents can make systematic errors
 
 ## Real-World Impact
 
